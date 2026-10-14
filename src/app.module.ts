@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { envSchema } from './config/env.schema.js';
 import { ProductsModule } from './products/products.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
+import { OrdersModule } from './orders/orders.module.js';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CategoriesModule } from './categories/categories.module.js';
     UsersModule,
     ProductsModule,
     CategoriesModule,
+    OrdersModule,
   ],
   controllers: [],
   providers: [],
