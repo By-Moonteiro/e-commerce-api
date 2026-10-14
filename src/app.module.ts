@@ -10,6 +10,7 @@ import { ProductsModule } from './products/products.module.js';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: envSchema,
+      cache: true,
     }),
     PrismaModule,
     UsersModule,
