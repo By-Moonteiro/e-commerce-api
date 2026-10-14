@@ -1,114 +1,190 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<div align="center">
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# E-commerce API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+API REST para gerenciamento de usuários, categorias, produtos e pedidos, desenvolvida como projeto de estudo e portfólio em backend.
 
-## Description
+[![NestJS](https://img.shields.io/badge/NestJS-12-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Fastify](https://img.shields.io/badge/Fastify-5-000000?style=for-the-badge&logo=fastify&logoColor=white)](https://fastify.dev/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Zod](https://img.shields.io/badge/Zod-4-3E67B1?style=for-the-badge&logo=zod&logoColor=white)](https://zod.dev/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![pnpm](https://img.shields.io/badge/pnpm-11-F69220?style=for-the-badge&logo=pnpm&logoColor=white)](https://pnpm.io/)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+</div>
 
-## Project setup
+## Sobre o projeto
 
-```bash
-$ pnpm install
+Este projeto foi desenvolvido durante a formação em Engenharia de Software para praticar fundamentos de desenvolvimento backend, organização de código, validação de dados e persistência relacional.
+
+A API implementa um fluxo básico de e-commerce, com gerenciamento de usuários, categorias, produtos, estoque e pedidos. O foco está em aplicar os conceitos estudados em um projeto funcional, evoluindo sua estrutura à medida que novos desafios aparecem.
+
+> **Atenção:** o projeto não possui autenticação nem autorização. Não exponha suas rotas publicamente nem utilize dados reais sem implementar essas proteções.
+
+## Funcionalidades
+
+- CRUD de usuários, categorias e produtos.
+- Hash de senhas com Argon2, sem expor os hashes nas respostas de usuário.
+- Filtro de produtos por categoria e parte do nome.
+- Criação e consulta de pedidos, com filtro opcional por usuário.
+- Cálculo do total no servidor e registro do preço unitário no momento da compra.
+- Baixa de estoque na criação do pedido e reposição no cancelamento.
+- Validação de payloads e variáveis de ambiente com Zod.
+- Tratamento global de exceções e documentação interativa da API.
+
+## Tecnologias
+
+| Tecnologia                                                                    | Uso                                   |
+| ----------------------------------------------------------------------------- | ------------------------------------- |
+| [NestJS](https://nestjs.com/) e [TypeScript](https://www.typescriptlang.org/) | Estrutura da aplicação e linguagem    |
+| [Fastify](https://fastify.dev/)                                               | Adaptador HTTP                        |
+| [Prisma](https://www.prisma.io/)                                              | Acesso ao banco de dados e migrations |
+| [PostgreSQL](https://www.postgresql.org/)                                     | Banco de dados relacional             |
+| [Zod](https://zod.dev/)                                                       | Validação de dados e configuração     |
+| [OpenAPI](https://www.openapis.org/) e [Scalar](https://scalar.com/)          | Documentação interativa               |
+| [Argon2](https://github.com/ranisr/argon2)                                    | Hash de senhas                        |
+| [Docker Compose](https://docs.docker.com/compose/)                            | Banco de dados local                  |
+| [pnpm](https://pnpm.io/)                                                      | Gerenciamento de pacotes              |
+
+## Arquitetura
+
+O código é organizado por módulos de domínio (`users`, `categories`, `products` e `orders`) e utiliza o padrão Repository para separar os serviços da implementação de persistência.
+
+```text
+Controller → Service → Abstract Repository → Prisma Repository → PrismaService → PostgreSQL
 ```
 
-## Compile and run the project
+Os contratos abstratos são usados na injeção de dependências do NestJS, enquanto os repositórios concretos cuidam do acesso ao banco. Nas operações de pedidos, as transações ajudam a manter os dados do pedido e do estoque consistentes.
+
+## Como executar localmente
+
+### Requisitos
+
+- Node.js `24 LTS`.
+- pnpm.
+- Docker e Docker Compose.
+
+### 1. Instale as dependências
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+pnpm install
 ```
 
-## Run tests
+### 2. Configure as variáveis de ambiente
+
+Copie o arquivo de exemplo:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+cp .env.example .env
 ```
 
-## Deployment
+Configure o `.env` com os valores do ambiente local. Para o banco criado pelo Docker Compose, use uma URL semelhante a:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+```env
+NODE_ENV=development
+PORT=3000
+DATABASE_URL=postgresql://postgres:SUA_SENHA@localhost:5432/ecommerce?schema=public
+```
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Confira se a `DATABASE_URL` no seu `.env` é válida antes de iniciar a aplicação.
+
+### 3. Inicie o banco de dados
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+pnpm db:up
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. Gere o Prisma Client e aplique as migrations
 
-## Observability
+```bash
+pnpm prisma:generate
+pnpm prisma:migrate
+```
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+### 5. Inicie a API
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+```bash
+pnpm start:dev
+```
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+A API ficará disponível em `http://localhost:3000`. A documentação interativa estará em `http://localhost:3000/docs`.
 
-## Resources
+## Endpoints
 
-Check out a few resources that may come in handy when working with NestJS:
+Todas as rotas são relativas a `http://localhost:3000`. Os parâmetros `:id` e os identificadores enviados no corpo devem ser UUIDs válidos.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observer](https://observer.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+| Método   | Rota                 | Sucesso          | Descrição                                    |
+| -------- | -------------------- | ---------------- | -------------------------------------------- |
+| `POST`   | `/users`             | `201 Created`    | Cadastra um usuário                          |
+| `GET`    | `/users`             | `200 OK`         | Lista usuários                               |
+| `GET`    | `/users/:id`         | `200 OK`         | Busca um usuário                             |
+| `PUT`    | `/users/:id`         | `200 OK`         | Atualiza um usuário                          |
+| `DELETE` | `/users/:id`         | `200 OK`         | Remove um usuário                            |
+| `POST`   | `/categories`        | `201 Created`    | Cadastra uma categoria                       |
+| `GET`    | `/categories`        | `200 OK`         | Lista categorias                             |
+| `GET`    | `/categories/:id`    | `200 OK`         | Busca uma categoria                          |
+| `PATCH`  | `/categories/:id`    | `200 OK`         | Atualiza uma categoria                       |
+| `DELETE` | `/categories/:id`    | `204 No Content` | Remove uma categoria                         |
+| `POST`   | `/products`          | `201 Created`    | Cadastra um produto                          |
+| `GET`    | `/products`          | `200 OK`         | Lista produtos                               |
+| `GET`    | `/products/:id`      | `200 OK`         | Busca um produto                             |
+| `PATCH`  | `/products/:id`      | `200 OK`         | Atualiza um produto                          |
+| `DELETE` | `/products/:id`      | `204 No Content` | Remove um produto                            |
+| `POST`   | `/orders`            | `201 Created`    | Cria um pedido e baixa o estoque             |
+| `GET`    | `/orders`            | `200 OK`         | Lista pedidos                                |
+| `GET`    | `/orders/:id`        | `200 OK`         | Busca um pedido com seus itens               |
+| `PATCH`  | `/orders/:id/cancel` | `200 OK`         | Cancela um pedido pendente e repõe o estoque |
 
-## Support
+### Parâmetros de consulta
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Rota            | Parâmetro    | Descrição                                                   |
+| --------------- | ------------ | ----------------------------------------------------------- |
+| `GET /products` | `categoryId` | Filtra pelo UUID da categoria                               |
+| `GET /products` | `search`     | Busca parte do nome sem diferenciar maiúsculas e minúsculas |
+| `GET /orders`   | `userId`     | Filtra pedidos pelo UUID do usuário                         |
 
-## Stay in touch
+### Exemplo: criar um pedido
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+O usuário e os produtos devem existir previamente. Envie os produtos e suas quantidades; o total e o preço unitário são calculados pela API.
 
-## License
+```bash
+curl -X POST http://localhost:3000/orders \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "userId": "550e8400-e29b-41d4-a716-446655440000",
+    "items": [
+      {
+        "productId": "6ba7b810-9dad-41d1-80b4-00c04fd430c8",
+        "quantity": 2
+      }
+    ]
+  }'
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+A API calcula o total a partir dos preços dos produtos e registra o preço unitário aplicado no momento da compra. Não inclua `total` ou `unitPrice` na requisição.
+
+## Scripts úteis
+
+| Comando                       | Descrição                               |
+| ----------------------------- | --------------------------------------- |
+| `pnpm start:dev`              | Inicia a API em modo de desenvolvimento |
+| `pnpm build`                  | Compila a aplicação                     |
+| `pnpm typecheck`              | Verifica os tipos TypeScript            |
+| `pnpm db:up` / `pnpm db:down` | Inicia ou para o PostgreSQL local       |
+| `pnpm prisma:generate`        | Gera o Prisma Client                    |
+| `pnpm prisma:migrate`         | Executa migrations em desenvolvimento   |
+| `pnpm prisma:studio`          | Abre o Prisma Studio                    |
+
+Outros comandos disponíveis estão definidos no `package.json`.
+
+## Limitações atuais
+
+- Não há autenticação nem autorização.
+- As listagens não possuem paginação.
+- O projeto ainda não possui testes automatizados.
+
+## Uso de ferramentas de IA
+
+GitHub Copilot e Claude foram utilizados como apoio durante o desenvolvimento, para explorar soluções, auxiliar em tarefas repetitivas e revisar implementações. As decisões e a validação do comportamento da aplicação fazem parte do processo de desenvolvimento do projeto.
