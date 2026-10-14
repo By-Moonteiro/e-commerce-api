@@ -23,12 +23,7 @@ import {
   updateProductSchema,
   type UpdateProductDto,
 } from './dto/update-product.dto.js';
-import type {
-  CreateProductData,
-  ProductEntity,
-  ProductFilters,
-  UpdateProductData,
-} from './entities/product.entity.js';
+import type { ProductEntity } from './entities/product.entity.js';
 import { ProductsService } from './products.service.js';
 
 @Controller('products')
@@ -37,17 +32,15 @@ export class ProductsController {
 
   @Post()
   create(
-    @Body({ schema: createProductSchema }) body: CreateProductDto,
+    @Body({ schema: createProductSchema }) data: CreateProductDto,
   ): Promise<ProductEntity> {
-    const data: CreateProductData = body;
     return this.productsService.create(data);
   }
 
   @Get()
   findAll(
-    @Query({ schema: findProductsQuerySchema }) query: FindProductsQueryDto,
+    @Query({ schema: findProductsQuerySchema }) filters: FindProductsQueryDto,
   ): Promise<ProductEntity[]> {
-    const filters: ProductFilters = query;
     return this.productsService.findAll(filters);
   }
 
@@ -61,9 +54,8 @@ export class ProductsController {
   @Patch(':id')
   update(
     @Param('id', { schema: idSchema }) id: string,
-    @Body({ schema: updateProductSchema }) body: UpdateProductDto,
+    @Body({ schema: updateProductSchema }) data: UpdateProductDto,
   ): Promise<ProductEntity> {
-    const data: UpdateProductData = body;
     return this.productsService.update({ id, data });
   }
 
