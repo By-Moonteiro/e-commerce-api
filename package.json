@@ -1,11 +1,14 @@
 {
   "name": "e-commerce-api",
-  "version": "0.0.1",
-  "description": "",
+  "version": "1.0.0",
+  "description": "API de e-commerce com NestJS 12, Fastify, Prisma, PostgreSQL e Zod",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
+  "engines": {
+    "node": "^24.0.0"
+  },
   "scripts": {
     "build": "nest build",
     "deploy": "nest deploy",
@@ -19,7 +22,14 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
-    "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+    "typecheck": "tsc --noEmit",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@fastify/static": "^10.1.6",
