@@ -6,4 +6,7 @@ export const envSchema = z.object({
     .default('development'),
   PORT: z.coerce.number().default(3000),
   DATABASE_URL: z.url(),
+
+  JWT_ACCESS_SECRET: z.string().min(32),
+  JWT_ACCESS_EXPIRES_IN: z.enum(['5m', '15m', '30m', '1h']).default('15m'),
 });

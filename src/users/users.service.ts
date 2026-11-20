@@ -8,6 +8,7 @@ import { UserRepository } from './repositories/user.repository.js';
 import {
   CreateUserData,
   UpdateUserData,
+  UserCredentials,
   UserEntity,
 } from './entities/user.entity.js';
 import * as argon2 from 'argon2';
@@ -34,6 +35,10 @@ export class UsersService {
     const user = await this.userRepository.findById(id);
     if (!user) throw new NotFoundException('Usuário não encontrado.');
     return user;
+  }
+
+  async findCredentialsByEmail(email: string): Promise<UserCredentials | null> {
+    return this.userRepository.findCredentialsByEmail(email);
   }
 
   async update(id: string, data: UpdateUserData): Promise<UserEntity> {
