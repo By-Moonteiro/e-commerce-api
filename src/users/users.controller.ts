@@ -16,11 +16,15 @@ import {
 } from './dto/user.schema.js';
 import { UserEntity } from './entities/user.entity.js';
 import { idSchema } from '../common/schemas/id.schema.js';
+import { Public } from '../auth/decorators/public.decorator.js';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @ApiOperation({ security: [] })
+  @Public()
   @Post()
   create(
     @Body({ schema: createUserSchema }) data: CreateUserDTO,
