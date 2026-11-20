@@ -26,6 +26,15 @@ async function bootstrap() {
     .setTitle('E-commerce API')
     .setDescription('API para um sistema de e-commerce')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'access-token',
+    )
+    .addSecurityRequirements('access-token')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
