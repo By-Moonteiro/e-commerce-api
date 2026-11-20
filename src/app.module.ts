@@ -6,6 +6,7 @@ import { envSchema } from './config/env.schema.js';
 import { ProductsModule } from './products/products.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
 import { OrdersModule } from './orders/orders.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { OrdersModule } from './orders/orders.module.js';
     ProductsModule,
     CategoriesModule,
     OrdersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
