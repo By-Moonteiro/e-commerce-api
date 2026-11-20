@@ -8,5 +8,5 @@ export const envSchema = z.object({
   DATABASE_URL: z.url(),
 
   JWT_ACCESS_SECRET: z.string().min(32),
-  JWT_ACCESS_EXPIRES_IN: z.string().default('15m'),
+  JWT_ACCESS_EXPIRES_IN: z.enum(['5m', '15m', '30m', '1h']).default('15m'),
 });
