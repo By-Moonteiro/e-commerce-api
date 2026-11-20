@@ -12,41 +12,47 @@ API REST para gerenciamento de usuários, categorias, produtos e pedidos, desenv
 [![Zod](https://img.shields.io/badge/Zod-4-3E67B1?style=for-the-badge&logo=zod&logoColor=white)](https://zod.dev/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![pnpm](https://img.shields.io/badge/pnpm-11-F69220?style=for-the-badge&logo=pnpm&logoColor=white)](https://pnpm.io/)
+[![JWT](https://img.shields.io/badge/JWT-Access_Token-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![Vitest](https://img.shields.io/badge/Vitest-4-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
 
 </div>
 
 ## Sobre o projeto
 
-Este projeto foi desenvolvido durante a formação em Engenharia de Software para praticar fundamentos de desenvolvimento backend, organização de código, validação de dados e persistência relacional.
+Este projeto foi desenvolvido durante a formação em Engenharia de Software para praticar fundamentos de desenvolvimento backend, organização de código, validação de dados, autenticação e persistência relacional.
 
-A API implementa um fluxo básico de e-commerce, com gerenciamento de usuários, categorias, produtos, estoque e pedidos. O foco está em aplicar os conceitos estudados em um projeto funcional, evoluindo sua estrutura à medida que novos desafios aparecem.
+A API implementa um fluxo básico de e-commerce, com gerenciamento de usuários, categorias, produtos, estoque e pedidos. Também conta com autenticação baseada em JWT para proteger os endpoints, utilizando Argon2 para armazenamento seguro de senhas.
 
-> **Atenção:** o projeto não possui autenticação nem autorização. Não exponha suas rotas publicamente nem utilize dados reais sem implementar essas proteções.
+O foco está em aplicar os conceitos estudados em um projeto funcional, evoluindo sua estrutura à medida que novos desafios aparecem.
 
 ## Funcionalidades
 
 - CRUD de usuários, categorias e produtos.
-- Hash de senhas com Argon2, sem expor os hashes nas respostas de usuário.
+- Hash e verificação de senhas com Argon2, sem expor os hashes nas respostas de usuário.
 - Filtro de produtos por categoria e parte do nome.
 - Criação e consulta de pedidos, com filtro opcional por usuário.
 - Cálculo do total no servidor e registro do preço unitário no momento da compra.
 - Baixa de estoque na criação do pedido e reposição no cancelamento.
 - Validação de payloads e variáveis de ambiente com Zod.
 - Tratamento global de exceções e documentação interativa da API.
+- Autenticação de usuários com JWT (Access Token).
+- Proteção global de rotas por meio de Guard.
+- Acesso público controlado por meio do decorator `@Public()`.
 
 ## Tecnologias
 
-| Tecnologia                                                                    | Uso                                   |
-| ----------------------------------------------------------------------------- | ------------------------------------- |
-| [NestJS](https://nestjs.com/) e [TypeScript](https://www.typescriptlang.org/) | Estrutura da aplicação e linguagem    |
-| [Fastify](https://fastify.dev/)                                               | Adaptador HTTP                        |
-| [Prisma](https://www.prisma.io/)                                              | Acesso ao banco de dados e migrations |
-| [PostgreSQL](https://www.postgresql.org/)                                     | Banco de dados relacional             |
-| [Zod](https://zod.dev/)                                                       | Validação de dados e configuração     |
-| [OpenAPI](https://www.openapis.org/) e [Scalar](https://scalar.com/)          | Documentação interativa               |
-| [Argon2](https://github.com/ranisr/argon2)                                    | Hash de senhas                        |
-| [Docker Compose](https://docs.docker.com/compose/)                            | Banco de dados local                  |
-| [pnpm](https://pnpm.io/)                                                      | Gerenciamento de pacotes              |
+| Tecnologia                                                                              | Uso                                   |
+| --------------------------------------------------------------------------------------- | ------------------------------------- |
+| [NestJS](https://nestjs.com/) e [TypeScript](https://www.typescriptlang.org/)           | Estrutura da aplicação e linguagem    |
+| [Fastify](https://fastify.dev/)                                                         | Adaptador HTTP                        |
+| [Prisma](https://www.prisma.io/)                                                        | Acesso ao banco de dados e migrations |
+| [PostgreSQL](https://www.postgresql.org/)                                               | Banco de dados relacional             |
+| [Zod](https://zod.dev/)                                                                 | Validação de dados e configuração     |
+| [OpenAPI](https://www.openapis.org/) e [Scalar](https://scalar.com/)                    | Documentação interativa               |
+| [Argon2](https://github.com/ranisr/argon2)                                              | Hash de senhas                        |
+| [Docker Compose](https://docs.docker.com/compose/)                                      | Banco de dados local                  |
+| [pnpm](https://pnpm.io/)                                                                | Gerenciamento de pacotes              |
+| [JWT](https://jwt.io/) e [@nestjs/jwt](https://docs.nestjs.com/security/authentication) | Autenticação e geração de tokens      |
 
 ## Arquitetura
 
@@ -57,6 +63,12 @@ Controller → Service → Abstract Repository → Prisma Repository → PrismaS
 ```
 
 Os contratos abstratos são usados na injeção de dependências do NestJS, enquanto os repositórios concretos cuidam do acesso ao banco. Nas operações de pedidos, as transações ajudam a manter os dados do pedido e do estoque consistentes.
+
+### Autenticação
+
+A autenticação é implementada por meio de um Guard global, responsável por verificar os tokens JWT nas rotas protegidas.
+
+O fluxo de login valida as credenciais do usuário utilizando Argon2 e, em caso de sucesso, gera um Access Token. O decorator `@Public()` permite definir endpoints que não exigem autenticação.
 
 ## Como executar localmente
 
@@ -90,6 +102,15 @@ DATABASE_URL=postgresql://postgres:SUA_SENHA@localhost:5432/ecommerce?schema=pub
 
 Confira se a `DATABASE_URL` no seu `.env` é válida antes de iniciar a aplicação.
 
+### Variáveis de autenticação
+
+| Variável                | Descrição                                                 |
+| ----------------------- | --------------------------------------------------------- |
+| `JWT_ACCESS_SECRET`     | Segredo utilizado para assinar e verificar os tokens JWT. |
+| `JWT_ACCESS_EXPIRES_IN` | Tempo de expiração dos tokens de acesso.                  |
+
+Utilize um segredo forte e mantenha essas variáveis fora do controle de versão. Nunca compartilhe valores reais de credenciais.
+
 ### 3. Inicie o banco de dados
 
 ```bash
@@ -115,27 +136,36 @@ A API ficará disponível em `http://localhost:3000`. A documentação interativ
 
 Todas as rotas são relativas a `http://localhost:3000`. Os parâmetros `:id` e os identificadores enviados no corpo devem ser UUIDs válidos.
 
-| Método   | Rota                 | Sucesso          | Descrição                                    |
-| -------- | -------------------- | ---------------- | -------------------------------------------- |
-| `POST`   | `/users`             | `201 Created`    | Cadastra um usuário                          |
-| `GET`    | `/users`             | `200 OK`         | Lista usuários                               |
-| `GET`    | `/users/:id`         | `200 OK`         | Busca um usuário                             |
-| `PUT`    | `/users/:id`         | `200 OK`         | Atualiza um usuário                          |
-| `DELETE` | `/users/:id`         | `200 OK`         | Remove um usuário                            |
-| `POST`   | `/categories`        | `201 Created`    | Cadastra uma categoria                       |
-| `GET`    | `/categories`        | `200 OK`         | Lista categorias                             |
-| `GET`    | `/categories/:id`    | `200 OK`         | Busca uma categoria                          |
-| `PATCH`  | `/categories/:id`    | `200 OK`         | Atualiza uma categoria                       |
-| `DELETE` | `/categories/:id`    | `204 No Content` | Remove uma categoria                         |
-| `POST`   | `/products`          | `201 Created`    | Cadastra um produto                          |
-| `GET`    | `/products`          | `200 OK`         | Lista produtos                               |
-| `GET`    | `/products/:id`      | `200 OK`         | Busca um produto                             |
-| `PATCH`  | `/products/:id`      | `200 OK`         | Atualiza um produto                          |
-| `DELETE` | `/products/:id`      | `204 No Content` | Remove um produto                            |
-| `POST`   | `/orders`            | `201 Created`    | Cria um pedido e baixa o estoque             |
-| `GET`    | `/orders`            | `200 OK`         | Lista pedidos                                |
-| `GET`    | `/orders/:id`        | `200 OK`         | Busca um pedido com seus itens               |
-| `PATCH`  | `/orders/:id/cancel` | `200 OK`         | Cancela um pedido pendente e repõe o estoque |
+| Método   | Rota                 | Sucesso          | Descrição                                      |
+| -------- | -------------------- | ---------------- | ---------------------------------------------- |
+| `POST`   | `/users`             | `201 Created`    | Cadastra um usuário                            |
+| `GET`    | `/users`             | `200 OK`         | Lista usuários                                 |
+| `GET`    | `/users/:id`         | `200 OK`         | Busca um usuário                               |
+| `PUT`    | `/users/:id`         | `200 OK`         | Atualiza um usuário                            |
+| `DELETE` | `/users/:id`         | `200 OK`         | Remove um usuário                              |
+| `POST`   | `/categories`        | `201 Created`    | Cadastra uma categoria                         |
+| `GET`    | `/categories`        | `200 OK`         | Lista categorias                               |
+| `GET`    | `/categories/:id`    | `200 OK`         | Busca uma categoria                            |
+| `PATCH`  | `/categories/:id`    | `200 OK`         | Atualiza uma categoria                         |
+| `DELETE` | `/categories/:id`    | `204 No Content` | Remove uma categoria                           |
+| `POST`   | `/products`          | `201 Created`    | Cadastra um produto                            |
+| `GET`    | `/products`          | `200 OK`         | Lista produtos                                 |
+| `GET`    | `/products/:id`      | `200 OK`         | Busca um produto                               |
+| `PATCH`  | `/products/:id`      | `200 OK`         | Atualiza um produto                            |
+| `DELETE` | `/products/:id`      | `204 No Content` | Remove um produto                              |
+| `POST`   | `/orders`            | `201 Created`    | Cria um pedido e baixa o estoque               |
+| `GET`    | `/orders`            | `200 OK`         | Lista pedidos                                  |
+| `GET`    | `/orders/:id`        | `200 OK`         | Busca um pedido com seus itens                 |
+| `PATCH`  | `/orders/:id/cancel` | `200 OK`         | Cancela um pedido pendente e repõe o estoque   |
+| `POST`   | `/auth/login`        | `200 OK`         | Autentica um usuário e retorna um Access Token |
+
+### Autenticação das requisições
+
+As rotas protegidas exigem um token JWT válido no cabeçalho `Authorization`, utilizando o esquema Bearer.
+
+```http
+Authorization: Bearer <access_token>
+```
 
 ### Parâmetros de consulta
 
@@ -181,9 +211,9 @@ Outros comandos disponíveis estão definidos no `package.json`.
 
 ## Limitações atuais
 
-- Não há autenticação nem autorização.
 - As listagens não possuem paginação.
-- O projeto ainda não possui testes automatizados.
+- A autenticação utiliza somente Access Tokens, sem implementação de Refresh Tokens.
+- A cobertura de testes automatizados ainda é parcial.
 
 ## Uso de ferramentas de IA
 
